@@ -7,25 +7,26 @@ and trigger automated alerts.
 ---
 
 ## Architecture
-App Logs → S3 (logs/raw/) → Lambda (triggered automatically)
-         |
-         v
-+------------------+
-|   AWS Lambda     |
-|  - Parse Logs    |
-|  - Detect Errors |
-|  - Calc Rate     |
-|  - Find Top Error|
-+------------------+
-         |
-+------------------+
-|                  |
-v                  v
-+----------+    +------------+
-| Amazon   |    | Amazon RDS |
-| SNS      |    | (Metrics)  |
-| (Alert)  |    |            |
-+----------+    +------------+
+App Logs
+|
+v
+AWS S3 (logs/raw/)
+|
+v
+AWS Lambda
+|-- Parse Logs
+|
+|-- Detect Errors
+|
+|-- Calculate Error Rate
+|
+|-- Find Top Error
+|
++-------------------+
+|                   |
+v                   v
+Amazon SNS          Amazon RDS
+(Email Alert)       (Metrics Stored)
 
 ---
 
