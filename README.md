@@ -7,26 +7,17 @@ and trigger automated alerts.
 ---
 
 ## Architecture
-App Logs
-|
-v
-AWS S3 (logs/raw/)
-|
-v
+App logs 
+AWS S3  (logs/raw/)
+
 AWS Lambda
-|-- Parse Logs
-|
-|-- Detect Errors
-|
-|-- Calculate Error Rate
-|
-|-- Find Top Error
-|
-+-------------------+
-|                   |
-v                   v
-Amazon SNS          Amazon RDS
-(Email Alert)       (Metrics Stored)
+    Parse Logs
+    Detect Errors
+    Calculate Error Rate
+    Find Top Error
+
+Amazon SNS              Amazon RDS
+(Email Alert)           (Metrics Stored)
 
 ---
 
@@ -57,20 +48,20 @@ Amazon SNS          Amazon RDS
 
 ## Project Structure
 production-log-monitoring-system/
-|
-|-- lambda/
-|   |-- log_processor.py       (Core Lambda function)
-|
-|-- config/
-|   |-- config.json            (Configurable error thresholds)
-|
-|-- sample_logs/
-|   |-- app_logs.txt           (Sample log file for testing)
-|
-|-- sql/
-|   |-- schema.sql             (RDS MySQL table schema)
-|
-|-- README.md
+
+lambda/
+    log_processor.py        (Core Lambda function)
+
+config/
+    config.json             (Configurable error thresholds)
+
+sample_logs/
+    app_logs.txt            (Sample log file for testing)
+
+sql/
+    schema.sql              (RDS MySQL table schema)
+
+README.md
 
 ---
 
@@ -91,13 +82,12 @@ production-log-monitoring-system/
 ## S3 Bucket Structure
 
 mdm-log-monitoring-bucket/
-|
-|-- logs/
-|   |-- raw/                   (upload log files here)
-|   |-- processed/             (for future processed output)
-|
-|-- config/
-|   |-- config.json            (threshold configuration)
+logs/
+    raw/                    (Upload log files here)
+    processed/              (for future processed output)
+
+config/
+    config.json             (Threshold configuration)
 
 ---
 
