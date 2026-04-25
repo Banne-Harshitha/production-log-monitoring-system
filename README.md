@@ -8,20 +8,24 @@ and trigger automated alerts.
 
 ## Architecture
 App Logs → S3 (logs/raw/) → Lambda (triggered automatically)
-|
-v
-+-----------------------+
-|  Parse Logs           |
-|  Detect Errors        |
-|  Calculate Rate       |
-|  Find Top Error       |
-+-----------------------+
-|
-v
-+-------------+-------------+
-|                           |
-SNS Alert                   RDS MySQL
-(Email Alert)              (Metrics Stored)
+         |
+         v
++------------------+
+|   AWS Lambda     |
+|  - Parse Logs    |
+|  - Detect Errors |
+|  - Calc Rate     |
+|  - Find Top Error|
++------------------+
+         |
++------------------+
+|                  |
+v                  v
++----------+    +------------+
+| Amazon   |    | Amazon RDS |
+| SNS      |    | (Metrics)  |
+| (Alert)  |    |            |
++----------+    +------------+
 
 ---
 
@@ -52,15 +56,20 @@ SNS Alert                   RDS MySQL
 
 ## Project Structure
 production-log-monitoring-system/
-├── lambda/
-│   └── log_processor.py       # Core Lambda function
-├── config/
-│   └── config.json            # Configurable error thresholds
-├── sample_logs/
-│   └── app_logs.txt           # Sample log file for testing
-├── sql/
-│   └── schema.sql             # RDS MySQL table schema
-└── README.md
+|
+|-- lambda/
+|   |-- log_processor.py       (Core Lambda function)
+|
+|-- config/
+|   |-- config.json            (Configurable error thresholds)
+|
+|-- sample_logs/
+|   |-- app_logs.txt           (Sample log file for testing)
+|
+|-- sql/
+|   |-- schema.sql             (RDS MySQL table schema)
+|
+|-- README.md
 
 ---
 
@@ -79,12 +88,15 @@ production-log-monitoring-system/
 ---
 
 ## S3 Bucket Structure
-your-bucket/
-├── logs/
-│   ├── raw/          ← upload log files here
-│   └── processed/    ← for future processed output
-└── config/
-└── config.json   ← threshold configuration
+
+mdm-log-monitoring-bucket/
+|
+|-- logs/
+|   |-- raw/                   (upload log files here)
+|   |-- processed/             (for future processed output)
+|
+|-- config/
+|   |-- config.json            (threshold configuration)
 
 ---
 
